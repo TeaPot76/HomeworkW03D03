@@ -1,6 +1,7 @@
+require_relative('../db/sql_runner.rb')
 class Album
 attr_reader :id
-attr_accessor :name, :genre, :artist_id
+attr_accessor :name, :genre, :artist_id, :id
 
   def initialize(options)
     @id = options['id'].to_i if options['id']
@@ -21,21 +22,29 @@ attr_accessor :name, :genre, :artist_id
     artist_hash = SqlRunner.run(sql, values)
     return artist_hash.map{|artist| Artist.new(artist)}
   end
-  #
-  # def artists_albums
-  #   sql = "SELECT * FROM albums WHERE artist_id = $1"
-  #   values = [@id]
-  #   artists_albums_hash = SqlRunner.run(sql, values)
-  #   return artists_albums_hash.map{|artist_album| Album.new(artist_album)}
-  #
-  # end
-  # def self.find(id)
-  #   sql = "SELECT * FROM albums WHERE artist_id = $1"
-  #   values =[id]
-  #   albums = SqlRunner.run(sql, values)
-  #   albums_by_artist = albums.first
-  #   list_all_albums = Album.new(albums_by_artist)
-  #   return list_all_albums
-  # end
+
+  def update()
+    sql = "UPDATE albums SET (genre, artist_d) = ($1, $2) WHERE id = $3"
+    SqlRunner.run(sql, values)
+  end
+
+
+  def delete()
+    sql = "DELETE FROM albums where id = $1"
+    values = [@id]
+    SqlRunner.run(sql)
+  end
+
+
+  def self.find(id)
+    sql = "SELECT * FROM albums WHERE id = $1"
+    values = [id]
+    results = SqlRunner.run(sql, values)
+    albums_by_id = results.first
+    album = Album.new(albums_by_id)
+    return album
+  end
+
+
 
 end

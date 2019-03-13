@@ -1,3 +1,4 @@
+require("pry")
 require_relative('../models/album.rb')
 require_relative('../models/artist.rb')
 
@@ -20,8 +21,14 @@ album3.save
 album4 = Album.new({'name'=> 'Raining Blood', 'genre' => 'Thrash metal','artist_id' => artist2.id})
 album4.save
 
-# p artist2.artists_albums
+p artist2.artists_albums
 
-p album4.artist
+#p album2.artist
 
-# p Album.find()
+p album1
+
+Album.find(@id=22)
+Artist.find(@id=22)
+
+binding.pry
+nil

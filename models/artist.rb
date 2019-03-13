@@ -23,4 +23,26 @@ def artists_albums
 
 end
 
+def album
+  sql = "SELECT * FROM albums WHERE artist_id = $1"
+  values = [@id]
+  album_hash = SqlRunner.run(sql, values)
+  return album_hash.map{|album| Album.new(album)}
+end
+
+
+def self.find(id)
+  sql = "SELECT * FROM artists WHERE id = $1"
+  values = [id]
+  artists_hash = SqlRunner.run(sql, values).first
+  artist = Artist.new(artists_hash)
+  return artist
+end
+
+
+def update()
+  sql = "UPDATE artists SET (name) = ($1) WHERE id = $2"
+  SqlRunner.run(sql, values)
+end
+
 end
