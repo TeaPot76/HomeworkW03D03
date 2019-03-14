@@ -29,8 +29,15 @@ attr_accessor :name, :genre, :artist_id, :id
   end
 
 
+
   def delete()
     sql = "DELETE FROM albums where id = $1"
+    values = [@id]
+    SqlRunner.run(sql)
+  end
+
+  def self.delete_all
+    sql = "DELETE FROM albums"
     values = [@id]
     SqlRunner.run(sql)
   end
